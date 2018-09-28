@@ -16,7 +16,7 @@ export const CLOSE_SNACKBAR = 'CLOSE_SNACKBAR';
 
 export const navigate = (path) => (dispatch) => {
   // Extract the page name from path.
-  const page = path === '/' ? 'view1' : path.slice(1);
+  const page = path === '/' ? 'vocable-trainer' : path.slice(1);
 
   // Any other info you might want to extract from the path (like page type),
   // you can do here
@@ -28,17 +28,17 @@ export const navigate = (path) => (dispatch) => {
 
 const loadPage = (page) => (dispatch) => {
   switch(page) {
-    case 'view1':
-      import('../components/my-view1.js').then((module) => {
-        // Put code in here that you want to run every time when
-        // navigating to view1 after my-view1.js is loaded.
+    case 'vocable-trainer':
+      import('../components/vocable-trainer.js').then((module) => {
+        // load vocabulary data
+        
       });
       break;
-    case 'view2':
-      import('../components/my-view2.js');
+    case 'vocable-mapping':
+      import('../components/vocable-mapping.js');
       break;
-    case 'view3':
-      import('../components/my-view3.js');
+    case 'vocable-overview':
+      import('../components/vocable-overview.js');
       break;
     default:
       page = 'view404';

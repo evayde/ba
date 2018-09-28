@@ -32,8 +32,24 @@ import '@polymer/app-layout/app-drawer/app-drawer.js';
 import '@polymer/app-layout/app-header/app-header.js';
 import '@polymer/app-layout/app-scroll-effects/effects/waterfall.js';
 import '@polymer/app-layout/app-toolbar/app-toolbar.js';
+import '@polymer/paper-tabs/paper-tabs.js';
+import '@polymer/paper-tabs/paper-tab.js';
 import { menuIcon } from './my-icons.js';
 import './snack-bar.js';
+
+// These are the actions needed by this element.
+import { loadVocabulary } from '../actions/vocabulary.js';
+
+// We are lazy loading its reducer.
+import vocabulary from '../reducers/vocabulary.js';
+import history from '../reducers/history.js';
+import analysis from '../reducers/analysis.js';
+
+store.addReducers({
+  vocabulary,
+  history,
+  analysis
+});
 
 class MyApp extends connect(store)(LitElement) {
   render() {
@@ -88,19 +104,16 @@ class MyApp extends connect(store)(LitElement) {
 
       .toolbar-list {
         display: none;
+        --paper-tabs-selection-bar-color: #468bc5;
+        --paper-tab-ink: #468bc5;
       }
 
-      .toolbar-list > a {
-        display: inline-block;
+      .toolbar-list > paper-tab > a {
         color: var(--app-header-text-color);
         text-decoration: none;
-        line-height: 30px;
-        padding: 4px 24px;
-      }
-
-      .toolbar-list > a[selected] {
-        color: var(--app-header-selected-color);
-        border-bottom: 4px solid var(--app-header-selected-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
       .menu-btn {
@@ -185,38 +198,36 @@ class MyApp extends connect(store)(LitElement) {
     <app-header condenses reveals effects="waterfall">
       <app-toolbar class="toolbar-top">
         <button class="menu-btn" title="Menu" @click="${_ => store.dispatch(updateDrawerState(true))}">${menuIcon}</button>
-        <div main-title>${appTitle}</div>
+        <div main-title>
+          ${appTitle}
+        </div>
       </app-toolbar>
 
       <!-- This gets hidden on a small screen-->
-      <nav class="toolbar-list">
-        <a ?selected="${_page === 'view1'}" href="/view1">View One</a>
-        <a ?selected="${_page === 'view2'}" href="/view2">View Two</a>
-        <a ?selected="${_page === 'view3'}" href="/view3">View Three</a>
-      </nav>
+      <paper-tabs class="toolbar-list" selected="0" autoselect>
+        <paper-tab><a ?selected="${_page === 'vocable-trainer'}" href="/vocable-trainer">Vocable Trainer</a></paper-tab>
+        <paper-tab><a ?selected="${_page === 'vocable-mapping'}" href="/vocable-mapping">Vocable Mapping</a></paper-tab>
+        <paper-tab><a ?selected="${_page === 'vocable-overview'}" href="/vocable-overview">Vocable Overview</a></paper-tab>
+      </paper-tabs>
     </app-header>
 
     <!-- Drawer content -->
     <app-drawer .opened="${_drawerOpened}"
         @opened-changed="${e => store.dispatch(updateDrawerState(e.target.opened))}">
       <nav class="drawer-list">
-        <a ?selected="${_page === 'view1'}" href="/view1">View One</a>
-        <a ?selected="${_page === 'view2'}" href="/view2">View Two</a>
-        <a ?selected="${_page === 'view3'}" href="/view3">View Three</a>
+        <a ?selected="${_page === 'vocable-trainer'}" href="/vocable-trainer">Vocable Trainer</a>
+        <a ?selected="${_page === 'vocable-mapping'}" href="/vocable-mapping">Vocable Mapping</a>
+        <a ?selected="${_page === 'vocable-overview'}" href="/vocable-overview">Vocable Overview</a>
       </nav>
     </app-drawer>
 
     <!-- Main content -->
     <main role="main" class="main-content">
-      <my-view1 class="page" ?active="${_page === 'view1'}"></my-view1>
-      <my-view2 class="page" ?active="${_page === 'view2'}"></my-view2>
-      <my-view3 class="page" ?active="${_page === 'view3'}"></my-view3>
+      <vocable-trainer class="page" ?active="${_page === 'vocable-trainer'}"></vocable-trainer>
+      <vocable-mapping class="page" ?active="${_page === 'vocable-mapping'}"></vocable-mapping>
+      <vocable-overview class="page" ?active="${_page === 'vocable-overview'}"></vocable-overview>
       <my-view404 class="page" ?active="${_page === 'view404'}"></my-view404>
     </main>
-
-    <footer>
-      <p>Made with &hearts; by the Polymer team.</p>
-    </footer>
 
     <snack-bar ?active="${_snackbarOpened}">
         You are now ${_offline ? 'offline' : 'online'}.</snack-bar>
@@ -239,12 +250,14 @@ class MyApp extends connect(store)(LitElement) {
     // See https://www.polymer-project.org/3.0/docs/devguide/settings#setting-passive-touch-gestures
     setPassiveTouchGestures(true);
   }
-
+  
   firstUpdated() {
     installRouter((location) => store.dispatch(navigate(window.decodeURIComponent(location.pathname))));
     installOfflineWatcher((offline) => store.dispatch(updateOffline(offline)));
     installMediaQueryWatcher(`(min-width: 460px)`,
-        (matches) => store.dispatch(updateLayout(matches)));
+    (matches) => store.dispatch(updateLayout(matches)));
+
+    store.dispatch(loadVocabulary());
   }
 
   updated(changedProps) {

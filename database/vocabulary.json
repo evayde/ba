@@ -1,0 +1,35 @@
+[
+  {
+    "id": 1,
+    "de": {
+      "text": "besorgt",
+      "mnemonic": "#"
+    },
+    "en": {
+      "text": "anxious",
+      "mnemonic": "The beginning sounds like the german word Angst"
+    }
+  },
+  {
+    "id": 2,
+    "de": {
+      "text": "komplex",
+      "mnemonic": "#"
+    },
+    "en": {
+      "text": "sophisticated",
+      "mnemonic": "The word is complex"
+    }
+  },
+  {
+    "id": 3,
+    "de": {
+      "text": "absolut",
+      "mnemonic": "#"
+    },
+    "en": {
+      "text": "absolute",
+      "mnemonic": "Very similar"
+    }
+  }
+]

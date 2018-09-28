@@ -56,5 +56,19 @@ export const SharedStyles = html`
     font-size: 30px;
     line-height: 64px;
   }
+
+  paper-button {
+    color: #fff;
+    background: #468bc5;
+    padding: .75rem 1.5rem;
+    border-radius: 3px;
+    width: fit-content;
+    margin: 1rem auto;
+    display: block;
+  }
+
+  paper-button.grey {
+    background: #ccc;
+  }
 </style>
 `;
