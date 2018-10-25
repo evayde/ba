@@ -2,12 +2,12 @@
   {
     "id": 1,
     "de": {
-      "text": "besorgt",
+      "text": "ängstlich",
       "mnemonic": "#"
     },
     "en": {
       "text": "anxious",
-      "mnemonic": "The beginning sounds like the german word Angst"
+      "mnemonic": "The words sound similar"
     }
   },
   {
@@ -18,7 +18,7 @@
     },
     "en": {
       "text": "sophisticated",
-      "mnemonic": "The word is complex"
+      "mnemonic": "The translation required is not 'complex'"
     }
   },
   {
@@ -29,7 +29,29 @@
     },
     "en": {
       "text": "absolute",
-      "mnemonic": "Very similar"
+      "mnemonic": "Both words are very similar"
+    }
+  },
+  {
+    "id": 4,
+    "de": {
+      "text": "Becher",
+      "mnemonic": "#"
+    },
+    "en": {
+      "text": "cup",
+      "mnemonic": "A cup without a handle"
+    }
+  },
+  {
+    "id": 5,
+    "de": {
+      "text": "Tasse",
+      "mnemonic": "#"
+    },
+    "en": {
+      "text": "mug",
+      "mnemonic": "A cup with handle"
     }
   }
 ]
